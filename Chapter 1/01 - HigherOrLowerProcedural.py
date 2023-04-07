@@ -34,8 +34,6 @@ def shuffle_deck(deck: list[card_type]) -> list[card_type]:
     random.shuffle(shuffled_deck)
     return shuffled_deck
 
-
-
 # Main code
 print("\n\nWelcome to 'Higher Or Lower'.")
 print("You have to choose whether the next card to be shown will be higher or lower than th current card.")
