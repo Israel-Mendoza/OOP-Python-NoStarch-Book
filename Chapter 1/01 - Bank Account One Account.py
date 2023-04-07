@@ -133,8 +133,8 @@ def show_account() -> None:
     
 
 # Main loop
+clear_terminal()
 while True:
-    clear_terminal()
     print("\n")
     print("Press 'b' to get the account balance.")
     print("Press 'd' to make a deposit.")
@@ -153,19 +153,16 @@ while True:
     match selection:
         case "b":
             get_balance()
-            after_transaction_halt()
         case "d":
             make_deposit()
-            after_transaction_halt()
         case "w":
             withdrawal()
-            after_transaction_halt()
         case "s":
             show_account()
-            after_transaction_halt()
+            
         case "q":
             break
-
+    after_transaction_halt()
 
 print("Done!")
             
