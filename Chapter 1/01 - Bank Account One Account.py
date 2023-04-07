@@ -8,12 +8,13 @@ account_balance: int = 100
 account_password: str = "soup"
 valid_options: set[str] = {"b", "d", "w", "s", "q"}
 
+
 def check_password() -> bool:
     """
     Requests user to enter a password.
     Compares the entered password with the account_password.
     If the password is incorrect, prints a messages to the console
-    and returns False. 
+    and returns False.
     If the password is correct, it returns True.
     """
     message: str = "Please enter your password: "
@@ -25,6 +26,7 @@ def check_password() -> bool:
 
 
 def simulate_processing_transaction() -> None:
+    """Simulates that the transaction is in process."""
     sleep(0.5)
     print(".")
     sleep(0.5)
@@ -34,6 +36,7 @@ def simulate_processing_transaction() -> None:
 
 
 def clear_terminal() -> None:
+    """Clears the terminal, regardless of the OS platform."""
     if name == "nt":
         system("cls")
     else:
@@ -47,6 +50,7 @@ def after_transaction_halt() -> None:
 
 
 def get_balance() -> None:
+    """Shows the balance in the account."""
     print("Balance...")
     if check_password():
         print("Getting the balance in your account...")
@@ -89,11 +93,11 @@ def withdrawal() -> None:
     Requests user to enter a valid number.
     If a valid, positive number is enteres, it continues.
     Otherwise, it prints a message and returns.
-    It validates that the amount is lesser than the current account balance. 
-    If not, it prints a message and returns. 
-    Calls the check_password() function. 
+    It validates that the amount is lesser than the current account balance.
+    If not, it prints a message and returns.
+    Calls the check_password() function.
     If the function returns True, it subtracts the amount from the account balance
-    and prints a message with the final balance. 
+    and prints a message with the final balance.
     """
     global account_balance
     print("Withdrawal...")
@@ -108,7 +112,7 @@ def withdrawal() -> None:
     if withdraw_amount_int <= 0:
         print(f"${withdraw_amount_int}.00 is not a valid amount to withdraw...")
         return
-    
+
     if check_password():
         if withdraw_amount_int <= account_balance:
             print(f"Withdrawing ${withdraw_amount_int}.00 from your account...")
@@ -123,6 +127,7 @@ def withdrawal() -> None:
 
 
 def show_account() -> None:
+    """Prints the account information to the console."""
     print("Show account...")
     if check_password():
         print("Getting your account information...")
@@ -130,7 +135,7 @@ def show_account() -> None:
         print(f"Account name: {account_name}")
         print(f"Account password: {account_password}")
         print(f"Account balance: ${account_balance}.00")
-    
+
 
 # Main loop
 clear_terminal()
@@ -144,9 +149,11 @@ while True:
 
     prompt: str = "What do you want to do? "
     selection: str = input(prompt).lower()
-    
+
     if selection[0] not in valid_options:
-        print(f"We're sorry, but {selection} is not a valid option. Please try again...")
+        print(
+            f"We're sorry, but {selection} is not a valid option. Please try again..."
+        )
         continue
     selection = selection[0]
 
@@ -159,11 +166,9 @@ while True:
             withdrawal()
         case "s":
             show_account()
-            
+
         case "q":
             break
     after_transaction_halt()
 
 print("Done!")
-            
-
