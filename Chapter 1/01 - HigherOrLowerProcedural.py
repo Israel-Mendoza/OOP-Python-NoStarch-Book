@@ -10,6 +10,7 @@ SUIT_TUPLE: tuple[str, ...] = ("Spades", "Hearts", "Clubs", "Diamonds")
 RANK_TUPLE: tuple[str, ...] = ("Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King")
 NCARDS: int= 8
 score: int = 50
+highest_score: int = 0
 starting_deck: list[card_type] = []
 
 for suit in SUIT_TUPLE:
@@ -42,6 +43,7 @@ print("You have 50 points to start.\n\n")
 
 # Main game loop
 while True:
+    print(f"Highest score: {highest_score}")
     game_deck: list[card_type] = shuffle_deck(starting_deck)
     current_card: card_type = get_card(game_deck)
     current_card_rank: str = current_card["rank"]
@@ -76,7 +78,7 @@ while True:
                 print("Sorry, the card was not lower... :(")
                 score -= 15
         if score <= 0:
-            print("Sorry, you lost! GAME OVER...")
+            print(f"Sorry, you lost! GAME OVER...\nFinal score: {score}")
             break
         else:
             print(f"You're current score is: {score}\n\n")
@@ -85,7 +87,8 @@ while True:
         current_card_suit = next_card_suit
         current_card_value = next_card_value
         current_card_name = next_card_name
-    
+    if score > 0 and score > highest_score:
+        highest_score = score
     message_to_continue: str = "To play again, press ENTER, or 'q' to quit: "
     go_again: str = input(message_to_continue).casefold()
     if go_again == "q":
