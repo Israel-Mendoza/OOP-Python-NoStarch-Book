@@ -53,7 +53,7 @@ while True:
     print(f"Starting card is: '{current_card_name}'\n\n")
 
     for card_number in range(0, NCARDS):
-        message: str = f"{card_number} Will the next card be higher or lower than the {current_card_name}? (enter h or l):"
+        message: str = f"Round {card_number}!\nWill the next card be higher or lower than the {current_card_name}? (enter h or l):"
         answer: str = input(message).casefold()
         next_card: card_type = get_card(game_deck)
         next_card_rank: str = next_card["rank"]
@@ -81,14 +81,16 @@ while True:
             print(f"Sorry, you lost! GAME OVER...\nFinal score: {score}")
             break
         else:
-            print(f"You're current score is: {score}\n\n")
+            print(f"Your current score is: {score}\n\n")
         
         current_card_rank = next_card_rank
         current_card_suit = next_card_suit
         current_card_value = next_card_value
         current_card_name = next_card_name
+    
     if score > 0 and score > highest_score:
         highest_score = score
+
     message_to_continue: str = "To play again, press ENTER, or 'q' to quit: "
     go_again: str = input(message_to_continue).casefold()
     if go_again == "q":
