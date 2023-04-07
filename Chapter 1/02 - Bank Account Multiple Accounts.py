@@ -2,18 +2,38 @@ from __future__ import annotations
 from os import system, name
 from time import sleep
 
-# Defining account variables
-account_name: str = "Joe"
-account_balance: int = 100
-account_password: str = "soup"
-valid_options: set[str] = {"b", "d", "w", "s", "q"}
+# Defining accounts holder lists
+valid_options: set[str] = {"n", "b", "d", "w", "s", "q", "v"}
 
 account_name_list: list[str] = []
-accunt_balance_list: list[int] = []
 account_password_list: list[str] = []
-name = "Suelen"
+account_balance_list: list[int] = []
 
-def check_password() -> bool:
+
+def get_account_number() -> int:
+    while True:
+        message: str = "Please enter your account number: "
+        account_number_str: str = input(message)
+        account_number_int: int = -1
+        try:
+            account_number_int = int(account_number_str)
+        except ValueError:
+            print(f"'{account_number_str}' is not a valid number. Please try again.")
+            continue
+        if account_number_int < 0:
+            print(
+                f"'{account_number_int}' is not a valid account number. Please try again."
+            )
+            continue
+        if (account_number_int) < len(account_name_list):
+            return account_number_int
+        else:
+            print(
+                f"Account number '{account_number_int}' does not exist. Enter an existing account number."
+            )
+
+
+def check_password(account_index: int) -> bool:
     """
     Requests user to enter a password.
     Compares the entered password with the account_password.
@@ -23,11 +43,11 @@ def check_password() -> bool:
     """
     message: str = "Please enter your password: "
     entered_password: str = input(message)
-    if entered_password != account_password:
+    if entered_password != account_password_list[account_index]:
         print("Password is incorrect")
         return False
     return True
-    
+
 
 def simulate_processing_transaction() -> None:
     """Simulates that the transaction is in process."""
@@ -48,21 +68,51 @@ def clear_terminal() -> None:
 
 
 def after_transaction_halt() -> None:
-    print("Press ENTER to continue...")
+    print("\nPress ENTER to continue...")
     input()
     clear_terminal()
 
 
-def get_balance() -> None:
+def create_new_account() -> None:
+    name_message: str = "Enter your full name: "
+    password_message: str = "Enter your password: "
+    while True:
+        name: str = input(name_message)
+        name = name.strip()
+        if len(name) < 2:
+            print("That is not a valid name.")
+            continue
+        else:
+            break
+    while True:
+        password: str = input(password_message)
+        password = password.strip()
+        if " " in password:
+            print("Password must not contain empty spaces...")
+            continue
+        if len(password) < 3:
+            print("Password must be at least 3 characters long...")
+            continue
+        else:
+            break
+    account_name_list.append(name)
+    account_password_list.append(password)
+    account_balance_list.append(100)
+    print(f"Your account number is '{len(account_balance_list) - 1}'")
+
+
+def get_balance(account_index: int) -> None:
     """Shows the balance in the account."""
     print("Balance...")
-    if check_password():
+    if check_password(account_index):
         print("Getting the balance in your account...")
         simulate_processing_transaction()
-        print(f"The current balance in your account is ${account_balance}.00")
+        print(
+            f"The current balance in your account is ${account_balance_list[account_index]}.00"
+        )
 
 
-def make_deposit() -> None:
+def make_deposit(account_index: int) -> None:
     """
     Requests user to enter a valid number.
     If a valid, positive number is entered, it continues.
@@ -72,7 +122,6 @@ def make_deposit() -> None:
     and prints a
     Otherwise, it does not do anything.
     """
-    global account_balance
     print("Deposit...")
     message: str = "Please enter the amout to deposit: "
     deposit_amount_str: str = input(message)
@@ -85,14 +134,14 @@ def make_deposit() -> None:
     if deposit_amount_int <= 0:
         print(f"${deposit_amount_int} is not a valid amount to deposit...")
         return
-    if check_password():
+    if check_password(account_index):
         print(f"Adding ${deposit_amount_int}.00 to your account...")
         simulate_processing_transaction()
-        account_balance += deposit_amount_int
-        print(f"Final balance: ${account_balance}.00")
+        account_balance_list[account_index] += deposit_amount_int
+        print(f"Final balance: ${account_balance_list[account_index]}.00")
 
 
-def withdrawal() -> None:
+def withdrawal(account_index: int) -> None:
     """
     Requests user to enter a valid number.
     If a valid, positive number is enteres, it continues.
@@ -103,7 +152,6 @@ def withdrawal() -> None:
     If the function returns True, it subtracts the amount from the account balance
     and prints a message with the final balance.
     """
-    global account_balance
     print("Withdrawal...")
     message: str = "Please enter the amout to withdraw: "
     withdraw_amount_str: str = input(message)
@@ -117,39 +165,49 @@ def withdrawal() -> None:
         print(f"${withdraw_amount_int}.00 is not a valid amount to withdraw...")
         return
 
-    if check_password():
-        if withdraw_amount_int <= account_balance:
+    if check_password(account_index):
+        if withdraw_amount_int <= account_balance_list[account_index]:
             print(f"Withdrawing ${withdraw_amount_int}.00 from your account...")
             simulate_processing_transaction()
-            account_balance -= withdraw_amount_int
-            print(f"Final balance: ${account_balance}.00")
+            account_balance_list[account_index] -= withdraw_amount_int
+            print(f"Final balance: ${account_balance_list[account_index]}.00")
         else:
             print(f"Withdrawing ${withdraw_amount_int}.00 from your account...")
             simulate_processing_transaction()
             print("Insufficient funds! Unable to process withdrawal...")
-            print(f"Current balance: {account_balance}")
+            print(f"Current balance: {account_balance_list[account_index]}")
 
 
-def show_account() -> None:
+def show_account(account_index: int) -> None:
     """Prints the account information to the console."""
     print("Show account...")
-    if check_password():
+    if check_password(account_index):
         print("Getting your account information...")
         simulate_processing_transaction()
-        print(f"Account name: {account_name}")
-        print(f"Account password: {account_password}")
-        print(f"Account balance: ${account_balance}.00")
+        print(f"Account name: {account_name_list[account_index]}")
+        print(f"Account password: {account_password_list[account_index]}")
+        print(f"Account balance: ${account_balance_list[account_index]}.00")
+
+
+def show_all_accounts() -> None:
+    if len(account_name_list) > 0:
+        for i in range(len(account_name_list)):
+            print(
+                f"Account number '{i}' is linked to {account_name_list[i]}. Balance: {account_balance_list[i]}"
+            )
 
 
 # Main loop
 clear_terminal()
 while True:
     print("\n")
+    print("Press 'n' to create a new account.")
     print("Press 'b' to get the account balance.")
     print("Press 'd' to make a deposit.")
     print("Press 'w' to make a withdrawal.")
     print("Press 's' to show the account.")
-    print("Press 'q' to quit.")
+    print("Press 'v' to view all accounts' information.")
+    print("Press 'q' to quit.\n")
 
     prompt: str = "What do you want to do? "
     selection: str = input(prompt).lower()
@@ -159,20 +217,27 @@ while True:
             f"We're sorry, but {selection} is not a valid option. Please try again..."
         )
         continue
+
+    clear_terminal()
     selection = selection[0]
 
-    match selection:
-        case "b":
-            get_balance()
-        case "d":
-            make_deposit()
-        case "w":
-            withdrawal()
-        case "s":
-            show_account()
-
-        case "q":
-            break
+    if selection == "n":
+        create_new_account()
+    elif selection == "v":
+        show_all_accounts()
+    elif selection == "q":
+        break
+    else:
+        account_number: int = get_account_number()
+        match selection:
+            case "b":
+                get_balance(account_number)
+            case "d":
+                make_deposit(account_number)
+            case "w":
+                withdrawal(account_number)
+            case "s":
+                show_account(account_number)
     after_transaction_halt()
 
 print("Done!")
