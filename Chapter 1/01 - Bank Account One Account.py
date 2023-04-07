@@ -23,7 +23,7 @@ def check_password() -> bool:
         print("Password is incorrect")
         return False
     return True
-
+    
 
 def simulate_processing_transaction() -> None:
     """Simulates that the transaction is in process."""
