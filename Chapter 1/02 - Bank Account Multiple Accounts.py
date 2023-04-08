@@ -193,7 +193,7 @@ def show_all_accounts() -> None:
     if len(account_name_list) > 0:
         for i in range(len(account_name_list)):
             print(
-                f"Account number '{i}' is linked to {account_name_list[i]}. Balance: {account_balance_list[i]}"
+                f"Account number '{i}' is linked to {account_name_list[i]}. Balance: ${account_balance_list[i]}.00"
             )
 
 
@@ -212,10 +212,12 @@ while True:
     prompt: str = "What do you want to do? "
     selection: str = input(prompt).lower()
 
-    if selection[0] not in valid_options:
+    if len(selection) < 1 or selection[0] not in valid_options:
         print(
-            f"We're sorry, but {selection} is not a valid option. Please try again..."
+            f"We're sorry, but {selection} is not a valid option. Press ENTER to try again..."
         )
+        input()
+        clear_terminal()
         continue
 
     clear_terminal()
@@ -241,3 +243,5 @@ while True:
     after_transaction_halt()
 
 print("Done!")
+input()
+clear_terminal()
