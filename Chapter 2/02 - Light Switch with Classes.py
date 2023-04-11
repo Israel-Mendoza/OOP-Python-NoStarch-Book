@@ -23,19 +23,32 @@ class LightSwitch:
         return f"LightSwitch object @ {hex(id(self)).upper()} is currently {'on' if self.switch_status else 'off'}."
     
 
-ls: LightSwitch = LightSwitch()
-print(ls)
-# LightSwitch object @ 0X7FA173C66C10 is currently off.
-ls.turn_on()
-print(ls)
-# LightSwitch object @ 0X7FA173C66C10 is currently on.
-ls.turn_off()
-print(ls)
-# LightSwitch object @ 0X7FA173C66C10 is currently off.
-ls.turn_on()
-print(ls)
-# LightSwitch object @ 0X7FA173C66C10 is currently on.
-ls.print_switch_status()
+def play_with_light_switch(switch: LightSwitch) -> None:
+    switch.turn_on()
+    print(switch)
+    switch.turn_off()
+    print(switch)
+    switch.turn_on()
+    print(switch)
+    switch.print_switch_status()
+    print(switch.switch_status)
+    print()
+
+
+ls_one: LightSwitch = LightSwitch()
+ls_two: LightSwitch = LightSwitch()
+
+
+play_with_light_switch(ls_one)
+# LightSwitch object @ 0X7F77800C72D0 is currently on.
+# LightSwitch object @ 0X7F77800C72D0 is currently off.
+# LightSwitch object @ 0X7F77800C72D0 is currently on.
 # The switch is currently on.
-print(ls.switch_status)
+# True
+
+play_with_light_switch(ls_two)
+# LightSwitch object @ 0X7F77800C5690 is currently on.
+# LightSwitch object @ 0X7F77800C5690 is currently off.
+# LightSwitch object @ 0X7F77800C5690 is currently on.
+# The switch is currently on.
 # True
