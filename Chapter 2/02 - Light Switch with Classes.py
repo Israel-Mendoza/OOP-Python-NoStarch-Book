@@ -40,15 +40,21 @@ ls_two: LightSwitch = LightSwitch()
 
 
 play_with_light_switch(ls_one)
-# LightSwitch object @ 0X7F77800C72D0 is currently on.
-# LightSwitch object @ 0X7F77800C72D0 is currently off.
-# LightSwitch object @ 0X7F77800C72D0 is currently on.
+# LightSwitch object @ 0X7FA1309872D0 is currently on.
+# LightSwitch object @ 0X7FA1309872D0 is currently off.
+# LightSwitch object @ 0X7FA1309872D0 is currently on.
 # The switch is currently on.
 # True
 
 play_with_light_switch(ls_two)
-# LightSwitch object @ 0X7F77800C5690 is currently on.
-# LightSwitch object @ 0X7F77800C5690 is currently off.
-# LightSwitch object @ 0X7F77800C5690 is currently on.
+# LightSwitch object @ 0X7FA130985690 is currently on.
+# LightSwitch object @ 0X7FA130985690 is currently off.
+# LightSwitch object @ 0X7FA130985690 is currently on.
 # The switch is currently on.
 # True
+
+print(ls_one)
+# LightSwitch object @ 0X7FA1309872D0 is currently on.
+
+print(ls_two)
+# LightSwitch object @ 0X7FA130985690 is currently on.
